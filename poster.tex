@@ -1,0 +1,72 @@
+\documentclass[final,hyperref={pdfpagelabels=false}]{beamer}
+\usepackage{grffile}
+%\mode<presentation>{\usetheme{Rochester}\usecolortheme[RGB={140,15,45}]{structure}}
+\mode<presentation>{\usetheme{Rochester}\usecolortheme[RGB={6,20,57}]{structure}}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath, amsthm, amssymb} 
+\usepackage{subcaption}
+\beamertemplatenavigationsymbolsempty
+\addto\captionsenglish{\renewcommand{\tablename}{Figure}}
+\usepackage{amsmath,amsthm, amssymb, latexsym}
+%\usepackage{times}\usefonttheme{professionalfonts}  % obsolete
+%\usefonttheme[onlymath]{serif}
+\boldmath
+\usepackage[orientation=landscape,size=a1,scale=1.4,debug]{beamerposter}
+% change list indention level
+% \setdefaultleftmargin{3em}{}{}{}{}{}
+
+%\usepackage{snapshot} % will write a .dep file with all dependencies, allows for easy bundling
+
+\usepackage{array,booktabs,tabularx}
+\newcolumntype{Z}{>{\centering\arraybackslash}X} % centered tabularx columns
+\newcommand{\pphantom}{\textcolor{white}} % phantom introduces a vertical space in p formatted table columns??!!
+
+\listfiles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\graphicspath{{figures/}}
+\title{\huge Plankton Classification with Deep Neural Networks}
+\author{Hendrik Weideman}
+\institute{Department of Computer Science\\Rensselaer Polytechnic Institute}
+\date[April 2015]{April 2015}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newlength{\columnheight}
+\setlength{\columnheight}{105cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{frame}
+  \begin{columns}[T]
+  	\begin{column}{.32\textwidth}
+      \begin{block}{Problem Statement}
+      \end{block}
+    \end{column}
+
+  	\begin{column}{.32\textwidth}
+      \begin{block}{The Learning Model}
+      \end{block}
+    \end{column}
+
+  	\begin{column}{.32\textwidth}
+      \begin{block}{The Future}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \vskip1ex
+  %\tiny\hfill\textcolor{ta2gray}{Created with \LaTeX \texttt{beamerposter}  \url{http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php}}
+  \tiny\hfill{Created with \LaTeX \texttt{beamerposter}  \url{http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php} \hskip1em}
+\end{frame}
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% End:
