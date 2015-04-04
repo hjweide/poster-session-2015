@@ -60,7 +60,12 @@
       \begin{block}{Data}
         We are currently collecting data to build a plankton dataset from the species present in Lake George.  Eventually this data
         will form the core of our training data.  Until this dataset is complete, however, we are working with a very recent dataset
-        made available through a Kaggle competition to develop our classification algorithms.
+        made available through a Kaggle competition to develop our classification algorithms.  Below we show images from both datasets.
+        On the left are images from the Kaggle dataset, and on the right are images from the dataset that is currently being collected
+        at Lake George.  All the organisms in the same row belong to the same class.  Note that two organisms from the same species
+        do not necessarily belong to the same class.  The reason for this is that a separation at the species level is often too coarse
+        for biologists to draw accurate conclusions, and hence there are different organisms from the same species that need to be
+        classified into separate classes.  This is why there are classes in both datasets that are visually very similar.
         \begin{figure}
           \begin{minipage}{.5\textwidth}
             \centering
@@ -147,12 +152,37 @@
 
   	\begin{column}{.32\textwidth}
       \begin{block}{The Learning Model}
+        To learn the plankton classification model, we use a deep convolutional neural network (DCNN).  Recently, DCNNs have improved
+        the state-of-the-art on a wide variety of vision-related tasks.  Unlike traditional classification techniques that rely on
+        hand-crafted features such as the Scale-Invariant Feature Transform (SIFT) or the Histogram of Oriented Gradients (HOG), DCNNs
+        incorporate the feature selection into the learning model, thereby learning its own feature descriptor specific to the problem.
+        This gives the learning model much more freedom in what information it decides to use in its final decision function, because
+        it is trained on raw pixel data directly.  
+      \end{block}
+
+      \begin{block}{A Simple Deep Convolutional Neural Network}
+        \begin{figure}
+          \includegraphics[width=0.9\textwidth]{images/svg/convnet.png}
+        \end{figure}
+
+
       \end{block}
     \end{column}
 
   	\begin{column}{.32\textwidth}
+      \begin{block}{Extending the Classifier}
+        Typically, when a learning model is designed, the set of classes to be separated is fixed ahead of time and remains fixed once
+        the model goes into use.  For our application, however, this is not the case.  Specifically, the distribution of plankton across
+        a lake changes based on factors such as water depth, temperature, and seasonal changes.  For these reasons, it is important
+        that our learning model be extensible to new classes.  Unfortunately, deep learning models are typically very expensive to train,
+        and thus we wish to avoid retraining the entire model.  Recent research has shown that it may be possible to use the lower
+        convolutional layers of the DCNN as a generic visual feature extractor, thus allowing us to retrain only the higher-level
+        fully-connected layers when a new class has to be added.
+      \end{block}
+
       \begin{block}{The Future}
       \end{block}
+      \includegraphics[width=\textwidth]{images/logo.eps}
     \end{column}
   \end{columns}
   \vskip1ex
