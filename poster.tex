@@ -44,28 +44,51 @@
 \begin{frame}
   \begin{columns}[T]
   	\begin{column}{.32\textwidth}
+      %\begin{block}{Problem Statement}
+      %  The abundance of different plankton species in lakes serves as a key indicator to determine the health of an aquatic ecosystem.
+      %  Unfortunately, collecting and classifying these organisms by species is a challenging task, even for trained experts.  Thus,
+      %  to determine the distribution of plankton across a lake, experts have to spend tedious hours manually classifying plankton by
+      %  species.  We wish to streamline this process by developing a system that is capable of automatically classifying these organisms.
+      %  By doing so, we aim to allow biologists to classify organisms at rates that are currently impossible because of the
+      %  time-consuming nature of the task.  This would allow them to study the distribution of millions of plankton across a lake.  In
+      %  addition, these distributions could be studied at multiple depths and at different points in time to provide a spatial-temporal
+      %  map of species across a lake.  This information could provide biologists with novel insights into aquatic ecosystems on a scale
+      %  that is currently infeasible.  Additionally, by collaborating with researchers from the arts and simulation sciences, we hope to
+      %  use our system to allow them to develop a new interactive visualization of the plankton populations present in a lake.
+      %\end{block}
+
       \begin{block}{Problem Statement}
-        The abundance of different plankton species in lakes serves as a key indicator to determine the health of an aquatic ecosystem.
-        Unfortunately, collecting and classifying these organisms by species is a challenging task, even for trained experts.  Thus,
-        to determine the distribution of plankton across a lake, experts have to spend tedious hours manually classifying plankton by
-        species.  We wish to streamline this process by developing a system that is capable of automatically classifying these organisms.
-        By doing so, we aim to allow biologists to classify organisms at rates that are currently impossible because of the
-        time-consuming nature of the task.  This would allow them to study the distribution of millions of plankton across a lake.  In
-        addition, these distributions could be studied at multiple depths and at different points in time to provide a spatial-temporal
-        map of species across a lake.  This information could provide biologists with novel insights into aquatic ecosystems on a scale
-        that is currently infeasible.  Additionally, by collaborating with researchers from the arts and simulation sciences, we hope to
-        use our system to allow them to develop a new interactive visualization of the plankton populations present in a lake.
+        The distribution of different plankton species in a lake serves as a key indicator to determine the health of an aquatic
+        ecosystem.  Unfortunately, collecting and classifying these organisms is a challenging task, even for highly-trained
+        experts.
+        We hope to make this process easier by developing a system that can automatically classify organisms into different classes of
+        plankton.  Ideally this would help biologists to
+        \begin{itemize}
+          \item study the distribution of millions of organisms across a lake,
+          \item study how these distributions change at different depths and locations, and
+          \item build a spatial-temporal map of species across a lake.
+        \end{itemize}
       \end{block}
 
-      \begin{block}{Data}
-        We are currently collecting data to build a plankton dataset from the species present in Lake George.  Eventually this data
+      \begin{block}{Project Goals}
+        Currently, such a study would be infeasible because of the sheer effort required to classify organisms on this scale.
+        Thus, we aim to streamline this process to the point where such a study could be practical, by developing a learning model
+        that can
+        \begin{itemize}
+          \item automatically classify plankton into different pre-defined classes,
+          \item be used to assist a human operator to accelerate the process of manual annotation, and
+          \item be extended to recognize new classes without prohibitively expensive re-training.
+        \end{itemize}
+      \end{block}
+
+      \begin{block}{The Data: Background}
+        We are currently collecting data to build an annotated plankton dataset from the species present in Lake George. 
+        Eventually this data
         will form the core of our training data.  Until this dataset is complete, however, we are working with a very recent dataset
         made available through a Kaggle competition to develop our classification algorithms.  Below we show images from both datasets.
-        On the left are images from the Kaggle dataset, and on the right are images from the dataset that is currently being collected
-        at Lake George.  All the organisms in the same row belong to the same class.  Note that two organisms from the same species
-        do not necessarily belong to the same class.  The reason for this is that a separation at the species level is often too coarse
-        for biologists to draw accurate conclusions, and hence there are different organisms from the same species that need to be
-        classified into separate classes.  This is why there are classes in both datasets that are visually very similar.
+        On the left are images from the Kaggle dataset, and on the right are some images from the in-progress Lake George dataset.
+        All the organisms in the same row belong to the same class.
+
         \begin{figure}
           \begin{minipage}{.5\textwidth}
             \centering
@@ -151,36 +174,61 @@
     \end{column}
 
   	\begin{column}{.32\textwidth}
-      \begin{block}{The Learning Model}
-        To learn the plankton classification model, we use a deep convolutional neural network (DCNN).  Recently, DCNNs have improved
-        the state-of-the-art on a wide variety of vision-related tasks.  Unlike traditional classification techniques that rely on
-        hand-crafted features such as the Scale-Invariant Feature Transform (SIFT) or the Histogram of Oriented Gradients (HOG), DCNNs
-        incorporate the feature selection into the learning model, thereby learning its own feature descriptor specific to the problem.
-        This gives the learning model much more freedom in what information it decides to use in its final decision function, because
-        it is trained on raw pixel data directly.  
+      \begin{block}{The Data: Challenges}
+        \begin{itemize}
+          \item Two organisms from the same species do not necessarily belong to the same class.  Often a species-level classification
+            is too coarse for biologists when studying the complex dynamics in an ecosystem, and so our learning model
+            needs to deal with some classes that are distinct, yet visually very similar.
+          \item The images are two-dimensional representations of a three-dimensional world, and so organisms appear in various
+            orientations around three rotational axes.
+        \end{itemize}
       \end{block}
 
       \begin{block}{A Simple Deep Convolutional Neural Network}
         \begin{figure}
           \includegraphics[width=0.9\textwidth]{images/svg/convnet.png}
         \end{figure}
-
-
       \end{block}
     \end{column}
 
   	\begin{column}{.32\textwidth}
-      \begin{block}{Extending the Classifier}
-        Typically, when a learning model is designed, the set of classes to be separated is fixed ahead of time and remains fixed once
-        the model goes into use.  For our application, however, this is not the case.  Specifically, the distribution of plankton across
-        a lake changes based on factors such as water depth, temperature, and seasonal changes.  For these reasons, it is important
-        that our learning model be extensible to new classes.  Unfortunately, deep learning models are typically very expensive to train,
-        and thus we wish to avoid retraining the entire model.  Recent research has shown that it may be possible to use the lower
-        convolutional layers of the DCNN as a generic visual feature extractor, thus allowing us to retrain only the higher-level
-        fully-connected layers when a new class has to be added.
+      \begin{block}{A Stack of Non-Linear Layers}
+        The deep convolutional neural network shown on the left has been greatly simplified for visualization purposes, with only
+        two feature maps per layer and only a single convolutional and pooling layer, respectively.  Additionally, many connections
+        between layers are omitted for visual clarity.
+        A real network would typically have several convolutional and pooling layers, with anything from tens to hundreds of feature
+        maps per layer.  Additionally, the output from each convolutional and fully-connected layer typically passes through a 
+        non-linear function called the \emph{activation function}.  This stack of layers, each with its own non-linearity, is what
+        allows deep convolutional neural networks to learn a highly non-linear mapping from input to output.
+      \end{block}
+
+      \begin{block}{Different Layers for Different Purposes}
+        \begin{itemize} 
+          \item The \textbf{input layer} takes a gray scale image, or color image separated into channels, and processes 
+            the raw pixel data directly, with an optional pre-processing transformation.
+          \item \textbf{Convolutional layers} consist of multiple convolutional feature maps, where each feature map has an associated
+            convolutional kernel that is learned by means of error backpropagation.  This kernel is replicated over the entire input
+            with shared weight parameters.
+          \item \textbf{Pooling layers} introduce a degree of translational invariance by selectively keeping outputs from the
+            preceding convolutional layer's feature maps.  When only the maximum responses are kept, this is so-called
+            \emph{max-pooling}.
+          \item \textbf{Fully-connected layers} are closely related to the hidden layers of a standard artificial neural network.  They
+            disregard any spatial information from the previous layer and simply compute a function mapping the output of the 
+            previous layer to target outputs.
+          \item The \textbf{output layer} is typically another fully-connected layer with a special non-linearity, typically a 
+            \emph{softmax} activation function.  This layer computes a probability distribution function over the target classes
+            from the output of the previous layer.
+        \end{itemize} 
       \end{block}
 
       \begin{block}{The Future}
+        Once our system is complete, we hope that it may be be used to
+        \begin{itemize}
+          \item produce new annotated datasets for scientific research,
+          \item accelerate manual annotation to allow researchers to label their own datasets,
+          \item assist biologists in gaining a better understanding of complex aquatic ecosystems, and
+          \item assist researchers in the simulation sciences to create an immersive visualization of plankton communities.
+        \end{itemize}
       \end{block}
       \includegraphics[width=\textwidth]{images/logo.eps}
     \end{column}
