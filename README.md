@@ -2,7 +2,7 @@
 ## Computer Science poster session, April 2015.
 I made this poster to present at RPI's Computer Science department poster session in April 2015.  It concerns research I did regarding plankton classification with deep convolutional neural networks.  
 
-The convolutional neural network drawing, ``convnet.{png, svg}'' is my own work and was created in Inkscape.
+The convolutional neural network drawing, convnet.{png, svg} is my own work and was created in Inkscape.
 
 The Rensselaer Polytechnic Institute logo is available from:
 https://www.rpi.edu/dept/NewsComm/graphics/logos.html
